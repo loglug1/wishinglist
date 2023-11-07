@@ -1,0 +1,10 @@
+{
+    "login": {
+        "title": "Login",
+        "location": "login.php"
+    },
+    "home": {
+        "title": "Home",
+        "location": "home.php"
+    }
+}

@@ -15,5 +15,4 @@ try {
 } catch (PDOException $e) {
     die($e->getMessage());
 }
-echo "Hello World! 2";
 ?>
