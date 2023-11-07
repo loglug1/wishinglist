@@ -1,6 +1,6 @@
 <?php
 $dbHost = getenv('AZURE_MYSQL_HOST') ?: 'localhost';
-$dbDatabase = getenv('AZURE_MYSQL_DBNAME') ?: 'project';
+$dbName = getenv('AZURE_MYSQL_DBNAME') ?: 'project';
 $dbUsername = getenv('AZURE_MYSQL_USERNAME') ?: 'root';
 $dbPassword = getenv('AZURE_MYSQL_PASSWORD') ?: 'root';
 $dbPort = getenv('AZURE_MYSQL_PORT') ?: '3306';
@@ -13,7 +13,7 @@ if (getenv('MYSQL_ATTR_SSL_CA')) {
 try {
     $pdo = new PDO("mysql:host={$dbHost};dbname={$dbName};port={$dbPort}", $dbUsername, $dbPassword, $dbAttrs);
 } catch (PDOException $e) {
-    die($e->fetchMessage());
+    die($e->getMessage());
 }
 echo "Hello World! 2";
 ?>

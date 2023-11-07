@@ -1,0 +1,15 @@
+{
+	"name": "CS234 Final Project",
+	"dockerComposeFile" : ["../docker-compose.yml", "./docker-compose.extend.yml"],
+	"service": "php-apache",
+	"workspaceFolder": "/workspace",
+	"shutdownAction": "stopCompose",
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": ["ritwickdey.LiveServer"]
+		}
+	}
+}

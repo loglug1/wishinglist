@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  php-apache:
+    volumes:
+      - ./:/workspace
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin:latest
+    restart: unless-stopped
+    ports:
+    - 8080:80
+    environment:
+    - PMA_HOST=mysql
