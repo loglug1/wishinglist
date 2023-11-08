@@ -1,10 +1,27 @@
 {
     "login": {
         "title": "Login",
-        "location": "login.php"
+        "location": "login.php",
+        "priviledge": 0
     },
     "home": {
         "title": "Home",
-        "location": "home.php"
+        "location": "home.php",
+        "priviledge": 1
+    },
+    "account": {
+        "title": "My Account",
+        "location": "account.php",
+        "priviledge": 1
+    },
+    "admin": {
+        "title": "Account Management",
+        "location": "adminAccounts.php",
+        "priviledge": 3
+    },
+    "register": {
+        "title": "Create an Account",
+        "location": "register.php",
+        "priviledge": 0
     }
 }

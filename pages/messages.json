@@ -1,0 +1,7 @@
+{
+    "incorrect": "Incorrect Username or Password",
+    "dberr": "There was an error when connecting to the database",
+    "noAuth": "You need an account to access this page!",
+    "accessErr": "You don't have permission to access this page!",
+    "hi": "Good morning Starshine! The Earth says hello!"
+}
