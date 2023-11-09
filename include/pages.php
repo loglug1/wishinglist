@@ -9,7 +9,7 @@ function gotoPage($pageId, $params = NULL) {
 }
 
 function linkTo($pageId, $text) {
-    echo // TODO: add foreach to encode params as hidden inputs
+    echo // TODO: encode params as json in hidden input
     "<form method=POST action='/'>
         <input type=hidden name=submission-action value=link>
         <input type=hidden name=location value='{$pageId}'>
