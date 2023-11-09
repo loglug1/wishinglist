@@ -4,6 +4,7 @@
     <input type=hidden name=submission-action value=login>
     <input type=submit name=submit value=Login>
 </form>
-Don't have an account? 
-<?php linkTo("register", "Create One");
-?>
+<h2>
+    Don't have an account? 
+    <?php linkTo("register", "Create One");?>
+</h2>
