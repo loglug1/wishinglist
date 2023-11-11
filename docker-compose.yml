@@ -7,11 +7,10 @@ services:
     image: wishinglist
     restart: unless-stopped
     volumes:
-      - ./src:/var/www/html
+      - ./public:/var/www/html
+      - ./include:/var/www/include
     ports:
       - 80:80
-    environment:
-      - AZURE_MYSQL_HOST=mysql
 
   mysql:
     container_name: wishinglist-mysql
