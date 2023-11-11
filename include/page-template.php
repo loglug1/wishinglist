@@ -4,9 +4,9 @@
     $defaultTitle = "Wishinglist";
     $defaultHeader  = "<h1>Wishinglist</h1>";
     $defaultMainNav = "<a href='/' class='w3-bar-item w3-button'>Home</a><a href='/account' class='w3-bar-item w3-button'>Account</a>";
-    $adminPanelButton = (isAdmin()) ? "<a href='/admin' class='w3-bar-item w3-button'>Admin Panel</a>" : '';
+    $adminPanelButtons = (isAdmin()) ? "<a href='/admin' class='w3-bar-item w3-button'>Manage Users</a><a href='/adminItems' class='w3-bar-item w3-button'>Manage Items</a>" : '';
     $logoutButton = "<a href='/logout' class='w3-bar-item w3-button w3-right'>Logout</a>";
-    $defaultNav = $defaultMainNav . $adminPanelButton . $logoutButton;
+    $defaultNav = $defaultMainNav . $adminPanelButtons . $logoutButton;
     $defaultMain = "<p>Something went wrong :/</p>";
     $defaultFooter = "<p>&copy; {$year} Camden McKay</p>";
 

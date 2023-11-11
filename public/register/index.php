@@ -44,9 +44,9 @@ function PageHeader() {
 
 function Main() {
     global $pageName;
-    $firstNameValueTag = (isset($_GET['firstName'])) ? " value={$_GET['firstName']} " : '';
-    $lastNameValueTag = (isset($_GET['lastName'])) ? " value={$_GET['lastName']} " : '';
-    $usernameValueTag = (isset($_GET['username'])) ? " value={$_GET['username']} " : '';
+    $firstNameValueTag = (isset($_GET['firstName'])) ? " value='{$_GET['firstName']}' " : '';
+    $lastNameValueTag = (isset($_GET['lastName'])) ? " value='{$_GET['lastName']}' " : '';
+    $usernameValueTag = (isset($_GET['username'])) ? " value='{$_GET['username']}' " : '';
     $usernameTakenSpan = '';
     $diffPasswordsSpan = '';
     if (isset($_GET['usernameTaken'])) {
@@ -58,10 +58,10 @@ function Main() {
 
     return "
     <form method=POST action='/register/'>
-        <label for=firstName>First Name: </label><input type=text id=firstName name=firstName {$firstNameValueTag} required><br>
-        <label for=lastName>Last Name: </label><input type=text id=lastName name=lastName {$lastNameValueTag} required><br>
+        <label for=firstName>First Name: </label><input type=text id=firstName name=firstName {$firstNameValueTag} maxlength=255 required><br>
+        <label for=lastName>Last Name: </label><input type=text id=lastName name=lastName {$lastNameValueTag} maxlength=255 required><br>
         {$usernameTakenSpan}
-        <label for=username>Username: </label><input type=text id=username name=username {$usernameValueTag} required><br>
+        <label for=username>Username: </label><input type=text id=username name=username {$usernameValueTag} maxlength=255 required><br>
         {$diffPasswordsSpan}
         <label for=password>Password: </label><input type=password id=password name=password minlength=5 required><br>
         <label for=password2>Re-enter Password: </label><input type=password id=password2 name=password2 minlength=5 required><br>

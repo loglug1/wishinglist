@@ -25,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         destroyUserAuthTokens($userId);
         deleteProfile($userId);
         deleteAccount($userId);
-        logout();
         $message = urlencode("Successfully deleted user.");
         header("Location: /admin/?m={$message}");
     }
@@ -67,7 +66,8 @@ function Title() {
 
 function PageHeader() {
     global $pageName, $user;
-    return "<h1>Update User: {$user['username']}</h1>";
+    $username = htmlspecialchars($user['username']);
+    return "<h1>Update User: {$username}</h1>";
 }
 
 function Main() {
@@ -75,9 +75,12 @@ function Main() {
     $firstName = (isset($_GET['firstName'])) ? $_GET['firstName'] : $user['firstName'];
     $lastName = (isset($_GET['lastName'])) ? $_GET['lastName'] : $user['lastName'];
     $username = (isset($_GET['username'])) ? $_GET['username'] : $user['username'];
-    $firstNameValueTag = ($firstName != NULL) ? " value={$firstName} " : '';
-    $lastNameValueTag = ($lastName != NULL) ? " value={$lastName} " : '';
-    $usernameValueTag = " value={$username} ";
+    $firstName = ($user['firstName'] != NULL) ? htmlspecialchars($user['firstName']) : NULL;
+    $lastName = ($user['lastName'] != NULL) ? htmlspecialchars($user['lastName']) : NULL;
+    $username = ($user['username'] != NULL) ? htmlspecialchars($user['username']) : '';
+    $firstNameValueTag = ($firstName != NULL) ? " value='{$firstName}' " : '';
+    $lastNameValueTag = ($lastName != NULL) ? " value='{$lastName}' " : '';
+    $usernameValueTag = " value='{$username}' ";
     $usernameTakenSpan = '';
     if (isset($_GET['usernameTaken'])) {
         $usernameTakenSpan = ($_GET['usernameTaken']) ? "<span class=w3-text-red>Username taken!</span><br>" : '';

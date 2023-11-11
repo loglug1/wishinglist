@@ -217,4 +217,72 @@
             die('db error');
         }
     }
+
+    function getUnclaimedItems() {
+        global $pdo;
+        $statement = $pdo->prepare("SELECT id, title, description, link FROM tbl_items WHERE claimedBy IS NULL");
+        return ($statement->execute()) ? $statement->fetchAll() : NULL;
+    }
+
+    function getClaimedItems($accountId) {
+        global $pdo;
+        $statement = $pdo->prepare("SELECT id, title, description, link FROM tbl_items WHERE claimedBy=:accountId");
+        $statement->bindValue(':accountId', $accountId);
+        return ($statement->execute()) ? $statement->fetchAll() : NULL;
+    }
+
+    function getAllItems() {
+        global $pdo;
+        $statement = $pdo->prepare("SELECT id, title, description, link FROM tbl_items");
+        return ($statement->execute()) ? $statement->fetchAll() : NULL;
+    }
+
+    function deleteItem($id) {
+        global $pdo;
+        $statement = $pdo->prepare("DELETE FROM tbl_items WHERE id=:id;");
+        $statement->bindValue(':id', $id);
+        if (!$statement->execute()) {
+            die('db error');
+        }
+    }
+    
+    function updateItem($id, $title, $description, $link) {
+        global $pdo;
+        if (!str_starts_with($link, 'https://') && !str_starts_with($link, 'http://')) {
+            $link = 'http://' . $link;
+        }
+        $profile = [
+            'id' => $id,
+            'title' => $title,
+            'description' => $description,
+            'link' => $link
+        ];
+        $statement = $pdo->prepare("UPDATE tbl_items SET title=:title, description=:description, link=:link WHERE id=:id;");
+        if (!$statement->execute($profile)) {
+            die('db error');
+        }
+    }
+
+    function createItem($title, $description, $link) {
+        global $pdo;
+        if (!str_starts_with($link, 'https://') && !str_starts_with($link, 'http://')) {
+            $link = 'http://' . $link;
+        }
+        $profile = [
+            'title' => $title,
+            'description' => $description,
+            'link' => $link
+        ];
+        $statement = $pdo->prepare("INSERT INTO tbl_items (title, description, link) VALUES (:title, :description, :link);");
+        if (!$statement->execute($profile)) {
+            die('db error');
+        }
+    }
+
+    function getItemById($id) {
+        global $pdo;
+        $statement = $pdo->prepare("SELECT title, description, link FROM tbl_items WHERE id=:id LIMIT 0,1");
+        $statement->bindValue(":id", $id);
+        return ($statement->execute()) ? $statement->fetch() : NULL;
+    }
 ?>

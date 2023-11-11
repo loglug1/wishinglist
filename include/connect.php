@@ -24,21 +24,31 @@ $pdo->query("CREATE TABLE IF NOT EXISTS tbl_accounts (
 );");
 
 $pdo->query("CREATE TABLE IF NOT EXISTS tbl_profiles (
-    id INT AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     priviledge INT NOT NULL,
     firstName VARCHAR(255),
     lastName VARCHAR(255),
-    accountId INT,
+    accountId INT NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY (accountId) REFERENCES tbl_accounts(id)
 );");
 
 $pdo->query("CREATE TABLE IF NOT EXISTS tbl_auth_tokens (
-    id INT AUTO_INCREMENT,
+    id INT NOT NULL AUTO_INCREMENT,
     token VARCHAR(255) NOT NULL,
-    accountId INT,
+    accountId INT NOT NULL,
     PRIMARY KEY(id),
     FOREIGN KEY (accountId) REFERENCES tbl_accounts(id)
+);");
+
+$pdo->query("CREATE TABLE IF NOT EXISTS tbl_items (
+    id INT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    description VARCHAR(280),
+    link VARCHAR(255),
+    claimedBy INT,
+    PRIMARY KEY(id),
+    FOREIGN KEY (claimedBy) REFERENCES tbl_accounts(id)
 );");
 
 $defaultPassword = getenv('DEFAULT_WEB_PASSWORD') ?: 'password';

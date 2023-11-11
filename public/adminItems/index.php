@@ -25,22 +25,19 @@ function PageHeader() {
 
 function Main() {
     global $pageName;
-    $allUsers = getAllUsers();
+    $allItems = getAllItems();
     $tableContents = '';
-    foreach ($allUsers as $user) {
-        $firstName = ($user['firstName'] != NULL) ? htmlspecialchars($user['firstName']) : '';
-        $lastName = ($user['lastName'] != NULL) ? htmlspecialchars($user['lastName']) : '';
-        $username = ($user['username'] != NULL) ? htmlspecialchars($user['username']) : '';
-        $firstName = htmlspecialchars($firstName);
-        $lastName = htmlspecialchars($lastName);
-        $username = htmlspecialchars($username);
-        $tableContents .= "<tr><td>{$firstName} {$lastName}<td>{$username}</td><td><a href='/updateUser?u={$user['id']}'>View</a></td></tr>";
+    foreach ($allItems as $item) {
+        $title = ($item['title'] != NULL) ? htmlspecialchars($item['title']) : '';
+        $link = ($item['link'] != NULL) ? htmlspecialchars($item['link']) : '';
+        $tableContents .= "<tr><td>{$title}<td><a href='{$link}'>{$link}</a></td><td><a href='/updateItem?i={$item['id']}'>View</a></td></tr>";
     }
     return "
         <div class='w3-section'>
+        <a class='w3-margin-left' href='/createItem'>Add an Item</a>
         <table class='w3-table w3-striped w3-bordered w3-border'>
         <thead>
-        <tr class='w3-gray'><th>Name</th><th>Username</th><th>Actions</th></tr>
+        <tr class='w3-gray'><th>Title</th><th>link</th><th>Actions</th></tr>
         </thead>
         {$tableContents}
         </table>
