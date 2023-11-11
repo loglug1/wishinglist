@@ -3,16 +3,20 @@ require_once __DIR__ . '/../../include/functions.php';
 
 $pageName = 'Logged out';
 
-// if (!isAuthenticated()) {
-//     header('Location: /login');
-//     exit();
-// }
+if (!isAuthenticated()) {
+    header('Location: /login');
+    exit();
+}
 
 logout();
 
 function Title() {
     global $pageName;
     return $pageName;
+}
+
+function Nav() {
+    return '';
 }
 
 function PageHeader() {

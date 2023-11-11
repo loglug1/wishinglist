@@ -8,6 +8,8 @@ if (!isAuthenticated()) {
     exit();
 }
 
+$user = getUserById($_SESSION['accountId']);
+
 function Title() {
     global $pageName;
     return $pageName;
@@ -21,7 +23,7 @@ function PageHeader() {
 function Main() {
     global $pageName;
     return "
-        <p>Welcome Home! <a href='/logout'>Logout</a>";
+        <p>Welcome Home!</p>";
 }
 
 include __DIR__ . '/../include/page-template.php';

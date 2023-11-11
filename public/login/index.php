@@ -10,13 +10,17 @@ if (isAuthenticated()) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = trim($_POST['username']);
-    $password = trim($_POST['password']);
+    $password = $_POST['password'];
     authenticate($username, $password);
 }
 
 function Title() {
     global $pageName;
     return $pageName;
+}
+
+function Nav() {
+    return '';
 }
 
 function PageHeader() {
