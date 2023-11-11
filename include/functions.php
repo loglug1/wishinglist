@@ -7,6 +7,7 @@
     function isAuthenticated() {
         global $sessionCookieName;
         if (isset($_SESSION['accountId'])) {
+            //die('session');
             return true;
         }
         if (isset($_COOKIE[$sessionCookieName])) {
@@ -14,12 +15,24 @@
             $authToken = getAuthToken($token);
             if ($authToken != NULL) {
                 $_SESSION['accountId'] = $authToken['accountId'];
+                //die('cookie exists with mathcing token in database');
                 return true;
             } else {
+                //die('cookie exists but token not in database');
                 return false;
             }
         } else {
+            //die('cookie doesnt exist');
             return false;
+        }
+    }
+
+    function logout() {
+        global $sessionCookieName;
+        if (isAuthenticated()) {
+            $token = $_COOKIE[$sessionCookieName];
+            deleteTokenCookie();
+            unset($_SESSION['accountId']);
         }
     }
 
@@ -59,6 +72,11 @@
         global $sessionCookieName;
         $expireTime = time() + (86400 * 14); //14 day expiry
         setcookie($sessionCookieName, $token, $expireTime, '/');
+    }
+
+    function deleteTokenCookie() {
+        global $sessionCookieName;
+        setcookie($sessionCookieName, '', 1, '/');
     }
 
     function getAuthToken($token) {

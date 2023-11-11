@@ -9,7 +9,6 @@ if (isAuthenticated()) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    global $pageName;
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
     authenticate($username, $password);

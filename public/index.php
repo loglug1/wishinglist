@@ -4,7 +4,7 @@ require_once __DIR__ . '/../include/functions.php';
 $pageName = 'Home';
 
 if (!isAuthenticated()) {
-    header('Location: /login/');
+    header('Location: /login');
     exit();
 }
 
@@ -13,9 +13,15 @@ function Title() {
     return $pageName;
 }
 
-function Body() {
+function PageHeader() {
     global $pageName;
     return "<h1>{$pageName}</h1>";
+}
+
+function Main() {
+    global $pageName;
+    return "
+        <p>Welcome Home! <a href='/logout'>Logout</a>";
 }
 
 include __DIR__ . '/../include/page-template.php';
