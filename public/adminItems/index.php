@@ -4,13 +4,12 @@ require_once __DIR__ . '/../../include/functions.php';
 $pageName = 'Manage Items';
 
 if (!isAuthenticated()) {
-    header('Location: /login');
-    exit();
+    redirectTo('/login');
 }
 
 if (!isAdmin()) {
     $message = urlencode('You do not have permission to view this page!');
-    header("Location: /?w={$message}");
+    redirectTo("/?w={$message}");
 }
 
 function Title() {

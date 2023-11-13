@@ -4,14 +4,12 @@ require_once __DIR__ . '/../../include/functions.php';
 $pageName = 'Update Item';
 
 if (!isAuthenticated()) {
-    header('Location: /login');
-    exit();
+    redirectTo('/login');
 }
 
 if (!isAdmin()) {
     $message = urlencode('You do not have permission to access this page!');
-    header("Location: /?w={$message}");
-    exit();
+    redirectTo("/?w={$message}");
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -19,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['delete'])) {
         deleteItem($itemId);
         $message = urlencode("Successfully deleted item.");
-        header("Location: /adminItems/?m={$message}");
+        redirectTo("/adminItems/?m={$message}");
     }
     $title = trim($_POST['title']);
     $description = trim($_POST['description']);
@@ -27,14 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     updateItem($itemId, $title, $description, $link);
     $message = urlencode('Successfully updated item!');
-    header("Location: /adminItems/?m={$message}");
-    exit();
+    redirectTo("/adminItems/?m={$message}");
 }
 
 $itemId = (isset($_GET['i'])) ? $_GET['i'] : NULL;
 if  ($itemId == NULL) {
     $message = urlencode('An error ocurred.');
-    header("Location: /?w={$message}");
+    redirectTo("/?w={$message}");
 }
 $item = getItemById($itemId);
 

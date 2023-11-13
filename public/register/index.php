@@ -4,8 +4,7 @@ require_once __DIR__ . '/../../include/functions.php';
 $pageName = 'Create an Account';
 
 if (isAuthenticated()) {
-    header('Location: /');
-    exit();
+    redirectTo('/');
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -23,8 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         createProfile($accountId, $firstName, $lastName, 0);
         authenticate($username, $password);
     } else {
-        header("Location: /register/?diffPasswords={$diffPasswords}&usernameTaken={$usernameTaken}&firstName={$firstName}&lastName={$lastName}&username={$username}");
-        exit();
+        redirectTo("/register/?diffPasswords={$diffPasswords}&usernameTaken={$usernameTaken}&firstName={$firstName}&lastName={$lastName}&username={$username}");
     }
 }
 

@@ -4,6 +4,12 @@
 
     $sessionCookieName = getenv('COOKIE_NAME') ?: 'wishinglistSession';
 
+    function redirectTo($page) {
+        $protocol = (isset($_SERVER['HTTPS'])) ? 'https' : 'http';
+        header("location: $protocol://".$_SERVER['HTTP_HOST'].$page);
+        exit();
+    }
+
     function isAuthenticated() {
         global $sessionCookieName;
         if (isset($_SESSION['accountId'])) {
@@ -51,13 +57,11 @@
             $token = createAuthToken($account['id']);
             setTokenCookie($token);
             $_SESSION['accoutnId'] = $account['id'];
-            header("Location: /{$destination}");
-            exit();
+            redirectTo("/{$destination}");
         } else {
             $message = "Incorrect username or password";
             $encodedMessage = urlencode($message);
-            header("Location: /login/?m={$encodedMessage}");
-            exit();
+            redirectTo("/login/?m={$encodedMessage}");
         }
     }
 

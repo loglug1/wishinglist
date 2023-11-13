@@ -4,8 +4,7 @@ require_once __DIR__ . '/../../include/functions.php';
 $pageName = 'Page';
 
 if (!isAuthenticated()) {
-    header('Location: /login');
-    exit();
+    redirectTo('/login');
 }
 
 $user = getUserById($_SESSION['accountId']);

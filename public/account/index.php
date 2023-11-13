@@ -4,8 +4,7 @@ require_once __DIR__ . '/../../include/functions.php';
 $pageName = 'Your Account';
 
 if (!isAuthenticated()) {
-    header('Location: /login');
-    exit();
+    redirectTo('/login');
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -13,13 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['delete'])) {
         if ($userId == -1) {
             $message = urlencode("You can't delete the super admin!");
-            header("Location: /?w={$message}");
-            exit();
+            redirectTo("/?w={$message}");
         }
         deleteUser($userId);
         logout();
         $message = urlencode("Successfully deleted user.");
-        header("Location: /login/?m={$message}");
+        redirectTo("/login/?m={$message}");
     }
     $firstName = trim($_POST['firstName']);
     $lastName = trim($_POST['lastName']);
@@ -35,14 +33,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         updateAccount($userId, $username, $password);
         updateProfile($userId, $firstName, $lastName, $priviledge);
         $message = urlencode('Successfully updated account!');
-        header("Location: /?m={$message}");
-        exit();
+        redirectTo("/?m={$message}");
     } else {
         $firstNameEnc = urlencode($firstName);
         $lastNameEnc = urlencode($lastName);
         $usernameEn = urlencode($username);
-        header("Location: /account/?diffPasswords={$diffPasswords}&usernameTaken={$usernameTaken}&firstName={$firstName}&lastName={$lastName}&username={$username}");
-        exit();
+        redirectTo("/account/?diffPasswords={$diffPasswords}&usernameTaken={$usernameTaken}&firstName={$firstName}&lastName={$lastName}&username={$username}");
     }
 }
 

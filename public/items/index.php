@@ -4,16 +4,14 @@ require_once __DIR__ . '/../../include/functions.php';
 $pageName = 'Your Claimed Items';
 
 if (!isAuthenticated()) {
-    header('Location: /login');
-    exit();
+    redirectTo('/login');
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['unclaim'])) {
         unclaimItem($_POST['itemId']);
         $message = urlencode("Item successfully returned to home page.");
-        header("Location: /items?m={$message}");
-        exit();
+        redirectTo("/items?m={$message}");
     }
 }
 

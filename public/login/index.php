@@ -4,8 +4,7 @@ require_once __DIR__ . '/../../include/functions.php';
 $pageName = 'Wishinglist';
 
 if (isAuthenticated()) {
-    header('Location: /');
-    exit();
+    redirectTo('/');
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

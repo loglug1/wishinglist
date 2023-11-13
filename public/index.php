@@ -4,16 +4,14 @@ require_once __DIR__ . '/../include/functions.php';
 $pageName = 'Home';
 
 if (!isAuthenticated()) {
-    header('Location: /login');
-    exit();
+    redirectTo('/login');
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['claim'])) {
         claimItem($_POST['itemId']);
         $message = urlencode("You've claimed an item. View it under Claimed Items.");
-        header("Location: /?m={$message}");
-        exit();
+        redirectTo("/?m={$message}");
     }
 }
 

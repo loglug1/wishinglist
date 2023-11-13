@@ -4,14 +4,12 @@ require_once __DIR__ . '/../../include/functions.php';
 $pageName = 'Wish for an Item';
 
 if (!isAuthenticated()) {
-    header('Location: /login');
-    exit();
+    redirectTo('/login');
 }
 
 if (!isAdmin()) {
     $message = urlencode('You do not have permission to access this page!');
-    header("Location: /?w={$message}");
-    exit();
+    redirectTo("/?w={$message}");
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -21,8 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     createItem($title, $description, $link);
     $message = urlencode('Successfully created item!');
-    header("Location: /adminItems/?m={$message}");
-    exit();
+    redirectTo("/adminItems/?m={$message}");
 }
 
 function Title() {

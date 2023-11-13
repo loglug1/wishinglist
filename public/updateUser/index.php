@@ -4,14 +4,12 @@ require_once __DIR__ . '/../../include/functions.php';
 $pageName = 'Update User';
 
 if (!isAuthenticated()) {
-    header('Location: /login');
-    exit();
+    redirectTo('/login');
 }
 
 if (!isAdmin()) {
     $message = urlencode('You do not have permission to access this page!');
-    header("Location: /?w={$message}");
-    exit();
+    redirectTo("/?w={$message}");
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -19,12 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['delete'])) {
         if ($userId == -1) {
             $message = urlencode("You can't delete the super admin!");
-            header("Location: /admin/?w={$message}");
-            exit();
+            redirectTo("/admin/?w={$message}");
         }
         deleteUser($userId);
         $message = urlencode("Successfully deleted user.");
-        header("Location: /admin/?m={$message}");
+        redirectTo("/admin/?m={$message}");
     }
     $firstName = trim($_POST['firstName']);
     $lastName = trim($_POST['lastName']);
@@ -41,18 +38,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         updateAccount($userId, $username, $password);
         updateProfile($userId, $firstName, $lastName, $priviledge);
         $message = urlencode('Successfully updated user!');
-        header("Location: /admin/?m={$message}");
-        exit();
+        redirectTo("/admin/?m={$message}");
     } else {
-        header("Location: /updateUser/?u={$userId}&usernameTaken={$usernameTaken}&firstName={$firstName}&lastName={$lastName}&username={$username}");
-        exit();
+        redirectTo("/updateUser/?u={$userId}&usernameTaken={$usernameTaken}&firstName={$firstName}&lastName={$lastName}&username={$username}");
     }
 }
 
 $editUserId = (isset($_GET['u'])) ? $_GET['u'] : NULL;
 if  ($editUserId == NULL) {
     $message = urlencode('An error ocurred.');
-    header("Location: /?w={$message}");
+    redirectTo("/?w={$message}");
 }
 $user = getUserById($editUserId);
 

@@ -4,14 +4,12 @@ require_once __DIR__ . '/../../include/functions.php';
 $pageName = 'Create User';
 
 if (!isAuthenticated()) {
-    header('Location: /login');
-    exit();
+    redirectTo('/login');
 }
 
 if (!isAdmin()) {
     $message = urlencode('You do not have permission to access this page!');
-    header("Location: /?w={$message}");
-    exit();
+    redirectTo("/?w={$message}");
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -27,11 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $userId = createAccount($username, $password);
         createProfile($userId, $firstName, $lastName, $priviledge);
         $message = urlencode('Successfully created user!');
-        header("Location: /admin/?m={$message}");
-        exit();
+        redirectTo("/admin/?m={$message}");
     } else {
-        header("Location: /updateUser/?u={$userId}&usernameTaken={$usernameTaken}&firstName={$firstName}&lastName={$lastName}&username={$username}&priviledge={$priviledge}");
-        exit();
+        redirectTo("/updateUser/?u={$userId}&usernameTaken={$usernameTaken}&firstName={$firstName}&lastName={$lastName}&username={$username}&priviledge={$priviledge}");
     }
 }
 
