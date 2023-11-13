@@ -8,7 +8,7 @@
     $logoutButton = "<a href='/logout' class='w3-bar-item w3-button w3-right w3-hover-theme'>Logout</a>";
     $defaultNav = $defaultMainNav . $adminPanelButtons . $logoutButton;
     $defaultMain = "<p>Something went wrong :/</p>";
-    $defaultFooter = "<p>&copy; {$year} Camden McKay</p>";
+    $defaultFooter = "<p>Wishinglist <span class='w3-right'>&copy; {$year} Camden McKay</span></p>";
 
     $title = (function_exists('Title')) ? Title() : $defaultTitle;
     $nav = (function_exists('Nav')) ? Nav() : $defaultNav;
@@ -32,6 +32,7 @@
     <title><?php echo $title; ?></title>
 </head>
 <body>
+    <div class='w3-top' style='position: sticky;'>
     <header class='w3-container w3-theme'>
         <?php
         echo $header;
@@ -42,6 +43,7 @@
         echo $nav;
         ?>
     </nav>
+</div>
     <main class='w3-container w3-auto' style='margin-bottom: 50px;'>
         <?php
         echo $warningBox;

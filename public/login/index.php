@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../include/functions.php';
 
-$pageName = 'Login';
+$pageName = 'Wishinglist';
 
 if (isAuthenticated()) {
     header('Location: /');

@@ -38,7 +38,7 @@ function Main() {
     }
     return "
         <div class='w3-section'>
-        <a class='w3-margin-left' href='/createUser'>Create New User</a>
+        <a  class='w3-margin-left w3-margin-bottom w3-button w3-gray w3-hover-black' href='/createUser'>Create New User</a>
         <table class='w3-table w3-striped w3-bordered w3-border'>
         <thead>
         <tr class='w3-gray'><th>Title</th><th>Username</th><th>Actions</th></tr>
