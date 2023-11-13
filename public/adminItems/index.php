@@ -30,14 +30,15 @@ function Main() {
     foreach ($allItems as $item) {
         $title = ($item['title'] != NULL) ? htmlspecialchars($item['title']) : '';
         $link = ($item['link'] != NULL) ? htmlspecialchars($item['link']) : '';
-        $tableContents .= "<tr><td>{$title}<td><a href='{$link}'>{$link}</a></td><td><a href='/updateItem?i={$item['id']}'>View</a></td></tr>";
+        $statusText = ($item['claimedBy']) ? 'Claimed' : 'Unclaimed';
+        $tableContents .= "<tr><td>{$title}<td><a href='{$link}'>{$link}</a></td><td>{$statusText}</td><td><a href='/updateItem?i={$item['id']}'>View</a></td></tr>";
     }
     return "
         <div class='w3-section'>
         <a class='w3-margin-left' href='/createItem'>Add an Item</a>
         <table class='w3-table w3-striped w3-bordered w3-border'>
         <thead>
-        <tr class='w3-gray'><th>Title</th><th>link</th><th>Actions</th></tr>
+        <tr class='w3-gray'><th>Title</th><th>Link</th><th>Status</th><th>Actions</th></tr>
         </thead>
         {$tableContents}
         </table>

@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../include/functions.php';
 
-$pageName = 'Update User';
+$pageName = 'Update Item';
 
 if (!isAuthenticated()) {
     header('Location: /login');
@@ -62,18 +62,20 @@ function Main() {
     $linkValueTag = ($link != NULL) ? " value='{$link}' " : '';
 
     return "
+    <div class='w3-panel w3-gray w3-padding w3-round-large w3-cell-middle' style='width: 50%; margin-left: auto; margin-right: auto;'>
     <form method=POST action='/updateItem/'>
-        <label for=title>Item Name: </label><input type=text id=title name=title {$titleValueTag} maxlength=255 required><br>
-        <label for=description>Item Description: </label><br><textarea id=description name=description maxlength=280>{$description}</textarea><br>
-        <label for=link>Link To Item: </label><input type=text id=link name=link {$linkValueTag} maxlength=255><br>
+        <label for=title>Item Name: </label><br><input type=text id=title name=title {$titleValueTag} class='w3-input w3-border w3-round-large' maxlength=255 required><br>
+        <label for=description>Item Description: </label><br><textarea id=description name=descriptio class='w3-input w3-border w3-round-large'n maxlength=280>{$description}</textarea><br>
+        <label for=link>Link To Item: </label><br><input type=text id=link name=link {$linkValueTag} class='w3-input w3-border w3-round-large' maxlength=255><br>
         <input type=hidden name=itemId value={$itemId}>
-        <input type=submit id=submit name=submit value='Update Item'>
+        <input type=submit id=submit name=submit value='Update Item' class='w3-button w3-round-large w3-dark-gray w3-hover-black'>
     </form>
     <form method=POST action='/updateItem/'>
         <input type=hidden name=delete value=1>
         <input type=hidden name=itemId value={$itemId}>
-        <input type=submit name=submit value='Delete Item'>
-    </form>";
+        <input type=submit name=submit value='Delete Item' class='w3-margin-top w3-button w3-round-large w3-red w3-hover-black'>
+    </form>
+    </div>";
 }
 
 include __DIR__ . '/../../include/page-template.php';

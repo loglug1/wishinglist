@@ -57,17 +57,19 @@ function Main() {
     }
 
     return "
+    <div class='w3-panel w3-gray w3-padding w3-round-large w3-cell-middle' style='width: 50%; margin-left: auto; margin-right: auto;'>
     <form method=POST action='/register/'>
-        <label for=firstName>First Name: </label><input type=text id=firstName name=firstName {$firstNameValueTag} maxlength=255 required><br>
-        <label for=lastName>Last Name: </label><input type=text id=lastName name=lastName {$lastNameValueTag} maxlength=255 required><br>
+        <label for=firstName>First Name: </label><input type=text id=firstName name=firstName {$firstNameValueTag} class='w3-input w3-border w3-round-large' maxlength=255 required><br>
+        <label for=lastName>Last Name: </label><input type=text id=lastName name=lastName {$lastNameValueTag} class='w3-input w3-border w3-round-large' maxlength=255 required><br>
         {$usernameTakenSpan}
-        <label for=username>Username: </label><input type=text id=username name=username {$usernameValueTag} maxlength=255 required><br>
+        <label for=username>Username: </label><input type=text id=username name=username {$usernameValueTag} class='w3-input w3-border w3-round-large' maxlength=255 required><br>
         {$diffPasswordsSpan}
-        <label for=password>Password: </label><input type=password id=password name=password minlength=5 required><br>
-        <label for=password2>Re-enter Password: </label><input type=password id=password2 name=password2 minlength=5 required><br>
-        <input type=submit id=submit name=submit value=Register>
+        <label for=password>Password: </label><input type=password id=password name=password class='w3-input w3-border w3-round-large' minlength=5 required><br>
+        <label for=password2>Re-enter Password: </label><input type=password id=password2 name=password2 class='w3-input w3-border w3-round-large' minlength=5 required><br>
+        <input type=submit id=submit name=submit value=Register class='w3-button w3-round-large w3-dark-gray w3-hover-black'>
     </form>
-    <p>Already have an account? <a href=/login>Login</a>";
+    <p>Already have an account? <a href=/login>Login</a></p>
+    </div>";
 }
 
 include __DIR__ . '/../../include/page-template.php';

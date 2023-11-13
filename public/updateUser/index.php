@@ -22,9 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: /admin/?w={$message}");
             exit();
         }
-        destroyUserAuthTokens($userId);
-        deleteProfile($userId);
-        deleteAccount($userId);
+        deleteUser($userId);
         $message = urlencode("Successfully deleted user.");
         header("Location: /admin/?m={$message}");
     }
@@ -75,34 +73,37 @@ function Main() {
     $firstName = (isset($_GET['firstName'])) ? $_GET['firstName'] : $user['firstName'];
     $lastName = (isset($_GET['lastName'])) ? $_GET['lastName'] : $user['lastName'];
     $username = (isset($_GET['username'])) ? $_GET['username'] : $user['username'];
-    $firstName = ($user['firstName'] != NULL) ? htmlspecialchars($user['firstName']) : NULL;
-    $lastName = ($user['lastName'] != NULL) ? htmlspecialchars($user['lastName']) : NULL;
-    $username = ($user['username'] != NULL) ? htmlspecialchars($user['username']) : '';
+    $priviledge = (isset($_GET['priviledge'])) ? $_GET['priviledge'] : $user['priviledge'];
+    $firstName = ($firstName != NULL) ? htmlspecialchars($firstName) : NULL;
+    $lastName = ($lastName != NULL) ? htmlspecialchars($lastName) : NULL;
+    $username = ($username != NULL) ? htmlspecialchars($username) : '';
     $firstNameValueTag = ($firstName != NULL) ? " value='{$firstName}' " : '';
     $lastNameValueTag = ($lastName != NULL) ? " value='{$lastName}' " : '';
     $usernameValueTag = " value='{$username}' ";
+    $checked = ($priviledge > 0) ? ' checked' : '';
     $usernameTakenSpan = '';
     if (isset($_GET['usernameTaken'])) {
         $usernameTakenSpan = ($_GET['usernameTaken']) ? "<span class=w3-text-red>Username taken!</span><br>" : '';
     }
-    $checked = ($user['priviledge'] == 2) ? ' checked' : '';
 
     return "
+    <div class='w3-panel w3-gray w3-padding w3-round-large w3-cell-middle' style='width: 50%; margin-left: auto; margin-right: auto;'>
     <form method=POST action='/updateUser/'>
-        <label for=firstName>First Name: </label><input type=text id=firstName name=firstName {$firstNameValueTag}><br>
-        <label for=lastName>Last Name: </label><input type=text id=lastName name=lastName {$lastNameValueTag}><br>
+        <label for=firstName>First Name: </label><input type=text id=firstName name=firstName {$firstNameValueTag} class='w3-input w3-border w3-round-large'><br>
+        <label for=lastName>Last Name: </label><input type=text id=lastName name=lastName {$lastNameValueTag} class='w3-input w3-border w3-round-large'><br>
         {$usernameTakenSpan}
-        <label for=username>Username: </label><input type=text id=username name=username {$usernameValueTag} required><br>
-        <label for=password>Password: </label><input type=password id=password name=password><br>
-        <label for=admin>Is admin? </label><input type=checkbox id=admin name=admin {$checked}><br>
+        <label for=username>Username: </label><input type=text id=username name=username {$usernameValueTag} class='w3-input w3-border w3-round-large' required><br>
+        <label for=password>Password: </label><input type=password id=password name=password class='w3-input w3-border w3-round-large'><br>
+        <label for=admin>Is admin? </label><input type=checkbox id=admin name=admin class='w3-check' {$checked}><br>
         <input type=hidden name=userId value={$editUserId}>
-        <input type=submit id=submit name=submit value='Update User'>
+        <input type=submit id=submit name=submit value='Update User' class='w3-margin-top w3-button w3-round-large w3-dark-gray w3-hover-black'>
     </form>
     <form method=POST action='/updateUser/'>
         <input type=hidden name=delete value=1>
         <input type=hidden name=userId value={$editUserId}>
-        <input type=submit name=submit value='Delete Account'>
-    </form>";
+        <input type=submit name=submit value='Delete Account' class='w3-margin-top w3-button w3-round-large w3-red w3-hover-black'>
+    </form>
+    </div>";
 }
 
 include __DIR__ . '/../../include/page-template.php';

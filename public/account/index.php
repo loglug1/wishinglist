@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../include/functions.php';
 
-$pageName = 'My Account';
+$pageName = 'Your Account';
 
 if (!isAuthenticated()) {
     header('Location: /login');
@@ -16,9 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: /?w={$message}");
             exit();
         }
-        destroyUserAuthTokens($userId);
-        deleteProfile($userId);
-        deleteAccount($userId);
+        deleteUser($userId);
         logout();
         $message = urlencode("Successfully deleted user.");
         header("Location: /login/?m={$message}");
@@ -82,21 +80,22 @@ function Main() {
     }
 
     return "
+    <div class='w3-panel w3-gray w3-padding w3-round-large w3-cell-middle' style='width: 50%; margin-left: auto; margin-right: auto;'>
     <form method=POST action='/account/'>
-        <label for=firstName>First Name: </label><input type=text id=firstName name=firstName {$firstNameValueTag} maxlength=255 required><br>
-        <label for=lastName>Last Name: </label><input type=text id=lastName name=lastName {$lastNameValueTag} maxlength=255 required><br>
+        <label for=firstName>First Name: </label><input type=text id=firstName name=firstName {$firstNameValueTag} class='w3-input w3-border w3-round-large' maxlength=255 required><br>
+        <label for=lastName>Last Name: </label><input type=text id=lastName name=lastName {$lastNameValueTag} class='w3-input w3-border w3-round-large' maxlength=255 required><br>
         {$usernameTakenSpan}
-        <label for=username>Username: </label><input type=text id=username name=username {$usernameValueTag} maxlength=255 required><br>
+        <label for=username>Username: </label><input type=text id=username name=username {$usernameValueTag} class='w3-input w3-border w3-round-large' maxlength=255 required><br>
         {$diffPasswordsSpan}
-        <label for=password>Password: </label><input type=password id=password name=password minlength=5><br>
-        <label for=password2>Re-enter Password: </label><input type=password id=password2 name=password2 minlength=5><br>
-        <input type=submit id=submit name=submit value='Update User'>
+        <label for=password>Password: </label><input type=password id=password name=password class='w3-input w3-border w3-round-large' minlength=5><br>
+        <label for=password2>Re-enter Password: </label><input type=password id=password2 name=password2 class='w3-input w3-border w3-round-large' minlength=5><br>
+        <input type=submit id=submit name=submit value='Update User' class='w3-button w3-round-large w3-dark-gray w3-hover-black'>
     </form>
     <form method=POST action='/account/'>
         <input type=hidden name=delete value=1>
-        <input type=submit name=submit value='Delete Account'>
+        <input type=submit name=submit value='Delete Account' class='w3-margin-top w3-button w3-round-large w3-red w3-hover-black'>
     </form>
-    ";
+    </div>";
 }
 
 include __DIR__ . '/../../include/page-template.php';

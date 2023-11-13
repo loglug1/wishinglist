@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../include/functions.php';
+require_once __DIR__ . '/../../include/functions.php';
 
-$pageName = 'Home';
+$pageName = 'Your Claimed Items';
 
 if (!isAuthenticated()) {
     header('Location: /login');
@@ -9,10 +9,10 @@ if (!isAuthenticated()) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['claim'])) {
-        claimItem($_POST['itemId']);
-        $message = urlencode("You've claimed an item. View it under Claimed Items.");
-        header("Location: /?m={$message}");
+    if (isset($_POST['unclaim'])) {
+        unclaimItem($_POST['itemId']);
+        $message = urlencode("Item successfully returned to home page.");
+        header("Location: /items?m={$message}");
         exit();
     }
 }
@@ -29,7 +29,7 @@ function PageHeader() {
 
 function Main() {
     global $pageName;
-    $items = getUnclaimedItems();
+    $items = getClaimedItems($_SESSION['accountId']);
     $itemsDiv = "<div class='w3-container'>";
     foreach ($items as $item) {
         $title = ($item['title'] != NULL) ? htmlspecialchars($item['title']) : '';
@@ -42,17 +42,17 @@ function Main() {
                             <a href='{$link}'>{$link}</a>
                         </p>
                         <p>
-                        <form method=POST action='/'>
-                            <input type=hidden name=claim value=1>
+                        <form method=POST action='/items/'>
+                            <input type=hidden name=unclaim value=1>
                             <input type=hidden name=itemId value={$item['id']}>
-                            <input type=submit name=submit value='Claim Item' class='w3-button w3-round-large w3-dark-gray w3-hover-black'>
+                            <input type=submit name=submit value='Unclaim Item' class='w3-button w3-round-large w3-dark-gray w3-hover-black'>
                         </form>
                         </p>
                     </div>";
     }
     $itemsDiv .= '</div>';
-    return "<h2>I want these things!</h2> {$itemsDiv}";
+    return "<h2>Items you have claimed to buy:</h2> {$itemsDiv}";
 }
 
-include __DIR__ . '/../include/page-template.php';
+include __DIR__ . '/../../include/page-template.php';
 ?>

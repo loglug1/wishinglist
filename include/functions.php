@@ -7,7 +7,6 @@
     function isAuthenticated() {
         global $sessionCookieName;
         if (isset($_SESSION['accountId'])) {
-            //die('session');
             return true;
         }
         if (isset($_COOKIE[$sessionCookieName])) {
@@ -15,14 +14,11 @@
             $authToken = getAuthToken($token);
             if ($authToken != NULL) {
                 $_SESSION['accountId'] = $authToken['accountId'];
-                //die('cookie exists with mathcing token in database');
                 return true;
             } else {
-                //die('cookie exists but token not in database');
                 return false;
             }
         } else {
-            //die('cookie doesnt exist');
             return false;
         }
     }
@@ -179,7 +175,7 @@
             $statement = $pdo->prepare("UPDATE tbl_accounts SET username=:username WHERE id=:accountId;");
         } else {
             $account['password'] = password_hash($password, PASSWORD_BCRYPT);
-            $statement = $pdo->prepare("UPDATE tbl_accounts SET username=:username password=:password WHERE id=:accountId;");
+            $statement = $pdo->prepare("UPDATE tbl_accounts SET username=:username, password=:password WHERE id=:accountId;");
         }
         if (!$statement->execute($account)) {
             die('db error');
@@ -233,7 +229,7 @@
 
     function getAllItems() {
         global $pdo;
-        $statement = $pdo->prepare("SELECT id, title, description, link FROM tbl_items");
+        $statement = $pdo->prepare("SELECT id, title, description, link, claimedBy FROM tbl_items");
         return ($statement->execute()) ? $statement->fetchAll() : NULL;
     }
 
@@ -248,7 +244,7 @@
     
     function updateItem($id, $title, $description, $link) {
         global $pdo;
-        if (!str_starts_with($link, 'https://') && !str_starts_with($link, 'http://')) {
+        if (!str_starts_with($link, 'https://') && !str_starts_with($link, 'http://') && $link != '') {
             $link = 'http://' . $link;
         }
         $profile = [
@@ -265,7 +261,7 @@
 
     function createItem($title, $description, $link) {
         global $pdo;
-        if (!str_starts_with($link, 'https://') && !str_starts_with($link, 'http://')) {
+        if (!str_starts_with($link, 'https://') && !str_starts_with($link, 'http://') && $link != '') {
             $link = 'http://' . $link;
         }
         $profile = [
@@ -284,5 +280,44 @@
         $statement = $pdo->prepare("SELECT title, description, link FROM tbl_items WHERE id=:id LIMIT 0,1");
         $statement->bindValue(":id", $id);
         return ($statement->execute()) ? $statement->fetch() : NULL;
+    }
+
+    function claimItem($id) {
+        global $pdo;
+        $values = [
+            'id' => $id,
+            'claimedBy' => $_SESSION['accountId']
+        ];
+        $statement = $pdo->prepare("UPDATE tbl_items SET claimedBy=:claimedBy WHERE id=:id");
+        if (!$statement->execute($values)) {
+            die('db error');
+        }
+    }
+
+    function unclaimItem($id) {
+        global $pdo;
+        $statement = $pdo->prepare("UPDATE tbl_items SET claimedBy=:claimedBy WHERE id=:id");
+        $statement->bindValue(':claimedBy', NULL);
+        $statement->bindValue(':id', $id);
+        if (!$statement->execute()) {
+            die('db error');
+        }
+    }
+
+    function unclaimAllItems($userId) {
+        global $pdo;
+        $statement = $pdo->prepare("UPDATE tbl_items SET claimedBy=:newClaimedBy WHERE claimedBy=:currentlyClaimedBy");
+        $statement->bindValue(':newClaimedBy', NULL);
+        $statement->bindValue(':currentlyClaimedBy', $userId);
+        if (!$statement->execute()) {
+            die('db error');
+        }
+    }
+
+    function deleteUser($id) {
+        destroyUserAuthTokens($id);
+        unclaimAllItems($id);
+        deleteProfile($id);
+        deleteAccount($id);
     }
 ?>
