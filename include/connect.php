@@ -1,5 +1,5 @@
 <?php
-$dbHost = getenv('AZURE_MYSQL_HOST') ?: 'mysql';
+$dbHost = getenv('AZURE_MYSQL_HOST') ?: 'localhost';
 $dbName = getenv('AZURE_MYSQL_DBNAME') ?: 'project';
 $dbUsername = getenv('AZURE_MYSQL_USERNAME') ?: 'root';
 $dbPassword = getenv('AZURE_MYSQL_PASSWORD') ?: 'root';

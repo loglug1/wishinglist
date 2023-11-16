@@ -11,6 +11,8 @@ services:
       - ./include:/var/www/include
     ports:
       - 80:80
+    environment:
+      - AZURE_MYSQL_HOST=mysql
 
   mysql:
     container_name: wishinglist-mysql
