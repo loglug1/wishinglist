@@ -29,8 +29,10 @@ function Main() {
     foreach ($allItems as $item) {
         $title = ($item['title'] != NULL) ? htmlspecialchars($item['title']) : '';
         $link = ($item['link'] != NULL) ? htmlspecialchars($item['link']) : '';
+        $shortenedLink = substr($link, 0, 50);
+        $shortenedLink = ($shortenedLink != $link) ? $shortenedLink . '...' : $shortenedLink;
         $statusText = ($item['claimedBy']) ? 'Claimed' : 'Unclaimed';
-        $tableContents .= "<tr><td>{$title}<td><a href='{$link}'>{$link}</a></td><td>{$statusText}</td><td><a href='/updateItem?i={$item['id']}'>View</a></td></tr>";
+        $tableContents .= "<tr><td>{$title}<td><a href='{$link}'>{$shortenedLink}</a></td><td>{$statusText}</td><td><a href='/updateItem?i={$item['id']}'>View</a></td></tr>";
     }
     return "
         <div class='w3-section'>

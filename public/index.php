@@ -33,11 +33,13 @@ function Main() {
         $title = ($item['title'] != NULL) ? htmlspecialchars($item['title']) : '';
         $description = ($item['description'] != NULL) ? htmlspecialchars($item['description']) : '';
         $link = ($item['link'] != NULL) ? htmlspecialchars($item['link']) : '';
+        $shortenedLink = substr($link, 0, 50);
+        $shortenedLink = ($shortenedLink != $link) ? $shortenedLink . '...' : $shortenedLink;
         $itemsDiv .= "<div class='w3-gray w3-panel w3-round-large'>
                         <h3>{$title}</h3>
                         <p>
                             {$description}<br>
-                            <a href='{$link}'>{$link}</a>
+                            <a href='{$link}' target='_blank' style='word-wrap: break-word;'>{$shortenedLink}</a>
                         </p>
                         <p>
                         <form method=POST action='/'>
