@@ -23,6 +23,14 @@ $pdo->query("CREATE TABLE IF NOT EXISTS tbl_accounts (
     PRIMARY KEY(id)
 );");
 
+$pdo->query("CREATE TABLE IF NOT EXISTS tbl_failed_logins (
+    id INT NOT NULL AUTO_INCREMENT,
+    username VARCHAR(255) NOT NULL,
+    ip VARCHAR(255) NOT NULL,
+    datetime DATETIME NOT NULL,
+    PRIMARY KEY(id)
+);");
+
 $pdo->query("CREATE TABLE IF NOT EXISTS tbl_profiles (
     id INT NOT NULL AUTO_INCREMENT,
     priviledge INT NOT NULL,

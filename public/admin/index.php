@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../include/functions.php';
 
-$pageName = 'Manage Items';
+$pageName = 'Manage Users';
 
 if (!isAuthenticated()) {
     redirectTo('/login');

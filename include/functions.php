@@ -53,15 +53,58 @@
 
     function authenticate($username, $password, $destination = '') {
         $account = getAccountByUsername($username);
+        if (maxedLoginAttempts($username)) {
+            $message = "Too many invalid logins. Try again later.";
+            $encodedMessage = urlencode($message);
+            redirectTo("/login/?m={$encodedMessage}");
+        }
+
         if (($account != NULL) && password_verify($password, $account['password'])) {
             $token = createAuthToken($account['id']);
             setTokenCookie($token);
             $_SESSION['accoutnId'] = $account['id'];
             redirectTo("/{$destination}");
         } else {
+            logFailedLogin($username);
             $message = "Incorrect username or password";
             $encodedMessage = urlencode($message);
             redirectTo("/login/?m={$encodedMessage}");
+        }
+    }
+
+    function maxedLoginAttempts($username) {
+        global $pdo;
+        $params = [
+            "username" => $username,
+            "ip" => $_SERVER['REMOTE_ADDR']
+        ];
+        $statement = $pdo->prepare("SELECT * FROM tbl_failed_logins WHERE username = :username AND ip = :ip AND datetime > NOW() - INTERVAL 15 MINUTE");
+        $result = ($statement->execute($params)) ? $statement->fetchAll() : [];
+        return count($result) >= 8;
+    }
+
+    function logFailedLogin($username) {
+        global $pdo;
+        $params = [
+            'username' => $username,
+            'ip' => $_SERVER['REMOTE_ADDR']
+        ];
+        $statement = $pdo->prepare("INSERT INTO tbl_failed_logins (username, ip, datetime) VALUES (:username, :ip, NOW())");
+        if (!$statement->execute($params)) {
+            die('db error');
+        }
+    }
+
+    function cleanFailedLogins($username = NULL) {
+        global $pdo;
+        if ($username != NULL) {
+            $statement = $pdo->prepare("DELETE FROM tbl_failed_logins WHERE username = :username");
+            $statement->bindValue(':username', $username);
+        } else {
+            $statement = $pdo->prepare("DELETE FROM test WHERE datetime < NOW() - INTERVAL 15 MINUTE");
+        }
+        if (!$statement->execute()) {
+            die('db error');
         }
     }
 
@@ -184,6 +227,7 @@
         if (!$statement->execute($account)) {
             die('db error');
         }
+        cleanFailedLogins($username);
     }
 
     function updateProfile($accountId, $firstName, $lastName, $priviledge) {
