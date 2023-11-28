@@ -12,14 +12,19 @@ This application allows the admin to create a wishlist and send it to people. Wh
 <details>
   <summary>Expand to See Screenshots</summary>
   
+  ### Home Page
   ![Home Page](https://raw.githubusercontent.com/loglug1/wishinglist/main/.github/screenshots/home.png)
 
+  ### Claiming an Item
   ![Claiming an Item](https://raw.githubusercontent.com/loglug1/wishinglist/main/.github/screenshots/claimedItem.png)
 
+  ### Manage Items Page
   ![Manage Items Page](https://raw.githubusercontent.com/loglug1/wishinglist/main/.github/screenshots/manageItems.png)
 
+  ### Updating Item Info
   ![Updating Item Info](https://raw.githubusercontent.com/loglug1/wishinglist/main/.github/screenshots/updateItem.png)
 
+  ### Updating User Info
   ![Updating User Info](https://raw.githubusercontent.com/loglug1/wishinglist/main/.github/screenshots/updateUser.png)
   
 </details>
