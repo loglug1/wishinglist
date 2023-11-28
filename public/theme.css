@@ -21,3 +21,6 @@
 .w3-hover-theme:hover {color:#fff !important; background-color:#e5182d !important}
 .w3-hover-text-theme:hover {color:#e5182d !important}
 .w3-hover-border-theme:hover {border-color:#e5182d !important}
+
+.spoiler {background-color: lightgray; color: lightgray;}
+.spoiler-transition:hover {transition: 1s; transition-delay: 0.2s; transition-timing-function: ease-in; background-color: gray; color: white;}
