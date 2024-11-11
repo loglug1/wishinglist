@@ -13,7 +13,7 @@ if (getenv('MYSQL_ATTR_SSL_CA')) {
 try {
     $pdo = new PDO("mysql:host={$dbHost};dbname={$dbName};port={$dbPort}", $dbUsername, $dbPassword, $dbAttrs);
 } catch (PDOException $e) {
-    die('db error');
+    die($e);
 }
 
 $pdo->query("CREATE TABLE IF NOT EXISTS tbl_accounts (
